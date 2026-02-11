@@ -54,14 +54,29 @@
 
 <section id="contact">
   <h2>Contact Me</h2>
-  <form id="contactForm">
-    <input type="text" id="name" placeholder="Your Name" required>
-    <input type="email" id="email" placeholder="Your Email" required>
-    <textarea id="message" placeholder="Your Message" required></textarea>
+
+  <p><strong>Phone:</strong>
+    <a href="tel:6361356590">6361356590</a>
+  </p>
+
+  <p><strong>Email:</strong>
+    <a href="mailto:25aimb59@kristujayanti.com">
+      25aimb59@kristujayanti.com
+    </a>
+  </p>
+
+  <form action="https://formsubmit.co/25aimb59@kristujayanti.com" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="New Portfolio Contact Message">
+
     <button type="submit">Send Message</button>
   </form>
-  <p id="response"></p>
 </section>
+  
 
 <footer>
   <p>© 2026 Vikram Kumar D </p>
