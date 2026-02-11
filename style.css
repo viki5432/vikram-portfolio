@@ -26,3 +26,21 @@ footer{text-align:center;padding:20px;background:#0f172a;color:white}
 .resume-btn:hover{
   background:#2563eb;
 }
+#contact {
+  padding: 40px;
+}
+
+#contact input,
+#contact textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+#contact button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
