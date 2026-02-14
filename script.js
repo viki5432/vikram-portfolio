@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Replace with your deployed backend URL when ready
-      const res = await fetch("http://localhost:5000/contact", {
+      const res = await fetch("https://my-portfolio-backend.onrender.com/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
