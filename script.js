@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     status.style.color = "blue";
 
     try {
-      // Replace with your deployed backend URL when ready
-      const res = await fetch("https://my-portfolio-backend.onrender.com/contact", {
+      // ✅ Updated URL to your Render backend
+      const res = await fetch("https://vikram-portfolio-9jsx.onrender.com/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
