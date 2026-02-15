@@ -16,7 +16,7 @@ app.use(express.static('.')); // Serve static files (HTML, CSS, JS)
 /* ================= MONGODB ATLAS CONNECTION ================= */
 const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI || MONGO_URI.includes('<username>') || MONGO_URI.includes('<password>')) {
+if (!MONGO_URI || MONGO_URI.includes('25aimb59_db_user') || MONGO_URI.includes('5sP4R0yitUSVcphh')) {
   console.error("❌ MongoDB Atlas URI not configured!");
   console.log("\n📝 Please update your .env file with your MongoDB Atlas credentials:");
   console.log("   MONGO_URI=mongodb+srv://username:password@cluster.xxxxx.mongodb.net/portfolioDB?retryWrites=true&w=majority\n");
