@@ -1,14 +1,16 @@
+require("node:dns/promises").setServers(["1.1.1.1","8.8.8.8"]);
 require("dotenv").config();
+console.log("✅.env loaded");
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
 
 /* ================= MIDDLEWARE ================= */
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(".")); // Serve frontend files
@@ -17,8 +19,7 @@ app.use(express.static(".")); // Serve frontend files
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Atlas Connected Successfully!"))
-  .catch((err) =>
-    console.error("❌ MongoDB Atlas Connection Error:", err.message)
+  .catch((err) =>console.log("❌ MongoDB Atlas Connection Error:", err.message)
   );
 
 /* ================= MONGODB SCHEMA & MODEL ================= */
