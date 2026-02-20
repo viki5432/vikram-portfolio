@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Send to backend
-      const res = await fetch("https://vikram-portfolio-backend.onrender.com/contact", {
+      const res = await fetch("http://localhost:500", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
