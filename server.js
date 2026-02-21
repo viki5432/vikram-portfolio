@@ -65,7 +65,11 @@ app.post("/contact", async (req, res) => {
     });
 
     console.log(`✅ New contact saved: ${email}`);
-    res.status(201).send("Message saved successfully!");
+   res.status(201).json({
+  success: true,
+  email: email,
+  message: "Message saved successfully!",
+});
   } catch (err) {
     console.error("❌ Error saving contact:", err.message);
     res.status(500).send("Server error. Please try again later.");
