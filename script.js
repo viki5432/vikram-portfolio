@@ -1,44 +1,4 @@
-// script.js - Enhanced contact form handling with smooth UX
-
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contactForm");
-  const status = document.getElementById("status");
-  const submitBtn = form.querySelector('button[type="submit"]');
-  
-  // Smooth scroll for navigation links
-  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-
-  // Add scroll effect to navbar
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-      nav.style.padding = '0.75rem 5%';
-    } else {
-      nav.style.padding = '1.25rem 5%';
-    }
-    
-    lastScroll = currentScroll;
-  });
-
-  // Form submission handler
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Get form values
+ // Get form values
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
@@ -69,10 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (res.ok) {
-        const text = await res.text();
-        showStatus("✅ " + text, "success");
-        form.reset();
-        
+  const data = await res.json();
+
+  showStatus(
+    `✅ Message sent successfully!<br><small>Email received: ${data.email}</small>`,
+    "success"
+  );
+
+  console.log("📧 Email received by server:", data.email);
+  form.reset();
         // Add success animation
         submitBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
         setTimeout(() => {
@@ -92,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Helper function to show status messages
   function showStatus(message, type) {
-    status.textContent = message;
+    status.innerHTML = message;
     status.className = "show";
     
     // Remove previous type classes
