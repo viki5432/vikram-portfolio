@@ -547,3 +547,42 @@ footer p {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+/* ===========================
+   PROFILE PHOTO – SQUARE PRO
+   =========================== */
+
+#about {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* Profile Image */
+.profile-pic {
+  width: 180px;
+  height: 195px;
+  border-radius: 18px; /* 👈 rounded edges, not circle */
+  object-fit: cover;
+  border: 3px solid var(--primary-color);
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Subtle hover lift */
+.profile-pic:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(37, 99, 235, 0.35);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  #about {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-pic {
+    margin-bottom: 1.25rem;
+  }
+}
