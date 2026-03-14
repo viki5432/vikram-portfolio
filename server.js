@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> de3d1637138141a786f056e00eabe30de06f4206
 require("node:dns/promises").setServers(["1.1.1.1","8.8.8.8"]);
 require("dotenv").config();
 console.log("✅.env loaded");
@@ -107,8 +103,4 @@ app.listen(PORT, () => {
   console.log(`   Local: http://localhost:${PORT}`);
   console.log(`   Health: http://localhost:${PORT}/health`);
   console.log(`\n📡 Ready to accept connections...\n`);
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> de3d1637138141a786f056e00eabe30de06f4206
