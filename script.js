@@ -128,8 +128,5 @@ document.addEventListener('DOMContentLoaded', () => {
     section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(section);
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> de3d1637138141a786f056e00eabe30de06f4206
+
