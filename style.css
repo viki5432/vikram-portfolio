@@ -714,3 +714,35 @@ footer p {
   from { transform: translateY(100vh); }
   to { transform: translateY(-10vh); }
 }
+/* ===========================
+   🔥 FIX ALIGNMENT (VISION + QUOTE)
+   =========================== */
+
+#goals,
+#quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal center */
+  justify-content: center; /* vertical balance */
+  text-align: center;
+}
+
+/* Fix width so text doesn't stretch weird */
+#goals p,
+#quote p {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Clean spacing */
+#goals h2,
+#quote h2 {
+  margin-bottom: 1rem;
+}
+
+/* Quote style upgrade */
+#quote p {
+  font-style: italic;
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
