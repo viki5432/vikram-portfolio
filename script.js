@@ -1,132 +1,134 @@
 document.addEventListener('DOMContentLoaded', () => {
+
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const status = document.getElementById('status');
 
-  // Form submit handler
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  // ================= FORM =================
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
+      const name = document.getElementById("name")?.value.trim();
+      const email = document.getElementById("email")?.value.trim();
+      const message = document.getElementById("message")?.value.trim();
 
-    // Validate fields
-    if (!name || !email || !message) {
-      showStatus("Please fill in all fields ❌", "error");
-      return;
-    }
-
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      showStatus("Please enter a valid email address ❌", "error");
-      return;
-    }
-
-    // Show loading
-    setButtonLoading(true);
-    showStatus("Saving your message...", "loading");
-
-    try {
-      // POST to backend
-      const res = await fetch("https://vikram-portfolio-mgq7.onrender.com/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        showStatus(`✅ ${data.message} <br><small>Email captured: ${data.email}</small>`, "success");
-        form.reset();
-
-        // Success animation
-        submitBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
-        setTimeout(() => submitBtn.style.background = "", 2000);
-      } else {
-        const errorText = await res.text();
-        showStatus("Failed to save message: " + errorText + " ❌", "error");
+      if (!name || !email || !message) {
+        showStatus("Please fill all fields ❌", "error");
+        return;
       }
 
-    } catch (err) {
-      console.error("Error:", err);
-      showStatus("Unable to connect to server ❌", "error");
-    } finally {
+      setButtonLoading(true);
+      showStatus("Sending...", "loading");
+
+      try {
+        const res = await fetch("https://vikram-portfolio-mgq7.onrender.com/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showStatus("✅ Message saved!", "success");
+          form.reset();
+        } else {
+          showStatus("❌ " + (data.message || "Error"), "error");
+        }
+
+      } catch (err) {
+        console.error(err);
+        showStatus("❌ Server not reachable", "error");
+      }
+
       setButtonLoading(false);
-    }
-  });
+    });
+  }
 
-  // Status message function
-  function showStatus(message, type) {
-    status.innerHTML = message;
+  function showStatus(msg, type) {
+    if (!status) return;
+
+    status.innerHTML = msg;
     status.className = "show";
-    status.classList.remove("success", "error", "loading");
 
-    if (type === "success") {
-      status.style.cssText = "color:#10b981;background:#d1fae5;border:2px solid #10b981;padding:10px;margin:10px 0;";
-    } else if (type === "error") {
-      status.style.cssText = "color:#ef4444;background:#fee2e2;border:2px solid #ef4444;padding:10px;margin:10px 0;";
-    } else if (type === "loading") {
-      status.style.cssText = "color:#3b82f6;background:#dbeafe;border:2px solid #3b82f6;padding:10px;margin:10px 0;";
-    }
-
-    if (type !== "loading") {
-      setTimeout(() => {
-        status.innerHTML = "";
-        status.className = "";
-      }, 5000);
-    }
+    if (type === "success") status.style.color = "#10b981";
+    else if (type === "error") status.style.color = "#ef4444";
+    else status.style.color = "#3b82f6";
   }
 
-  // Button loading state
   function setButtonLoading(isLoading) {
-    const buttonText = submitBtn.querySelector('span');
-    const buttonIcon = submitBtn.querySelector('i');
+    if (!submitBtn) return;
 
-    if (isLoading) {
-      submitBtn.disabled = true;
-      buttonText.textContent = "Saving...";
-      buttonIcon.className = "fas fa-spinner fa-spin";
-      submitBtn.style.cursor = "not-allowed";
-      submitBtn.style.opacity = "0.7";
-    } else {
-      submitBtn.disabled = false;
-      buttonText.textContent = "Send Message";
-      buttonIcon.className = "fas fa-paper-plane";
-      submitBtn.style.cursor = "pointer";
-      submitBtn.style.opacity = "1";
-    }
+    submitBtn.disabled = isLoading;
+    submitBtn.style.opacity = isLoading ? "0.7" : "1";
   }
 
-  // Input border feedback
-  const inputs = form.querySelectorAll('input, textarea');
-  inputs.forEach(input => {
-    input.addEventListener('blur', function() {
-      this.style.borderColor = this.value.trim() === '' && this.hasAttribute('required') ? '#ef4444' : '#10b981';
-    });
-
-    input.addEventListener('focus', function() {
-      this.style.borderColor = '#2563eb';
-    });
-  });
-
-  // Scroll animations
-  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+  // ================= SCROLL ANIMATION =================
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+        entry.target.classList.add("show");
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.1 });
 
-  document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(section);
+  document.querySelectorAll("section").forEach(sec => {
+    sec.classList.add("hidden");
+    observer.observe(sec);
   });
-});
 
+  // ================= SCROLL BAR =================
+  const progressBar = document.getElementById("progress-bar");
+  if (progressBar) {
+    window.addEventListener("scroll", () => {
+      const scroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      progressBar.style.width = (scroll / height) * 100 + "%";
+    });
+  }
+
+  // ================= CURSOR GLOW =================
+  const glow = document.querySelector(".cursor-glow");
+  if (glow) {
+    document.addEventListener("mousemove", (e) => {
+      glow.style.left = e.clientX + "px";
+      glow.style.top = e.clientY + "px";
+    });
+  }
+
+  // ================= TYPING EFFECT =================
+  const typingElement = document.getElementById("typing-text");
+  if (typingElement) {
+    const text = "Machine Learning Engineer 🚀";
+    let i = 0;
+
+    function typeEffect() {
+      if (i < text.length) {
+        typingElement.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 40);
+      }
+    }
+
+    typeEffect();
+  }
+
+  // ================= PARTICLES =================
+  const particlesContainer = document.getElementById("particles");
+
+  if (particlesContainer) {
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = (3 + Math.random() * 5) + "s";
+
+      particlesContainer.appendChild(p);
+    }
+  }
+
+});
