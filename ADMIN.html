@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      background: #020617;
+      color: #fff;
+      font-family: Poppins, sans-serif;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #0f172a;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #1e293b;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #3b82f6;
+    }
+
+    .email {
+      color: #3b82f6;
+      font-size: 0.9rem;
+    }
+
+    .msg {
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📩 Admin Messages</h1>
+<div id="messages">Loading...</div>
+
+<script>
+async function loadMessages() {
+  try {
+    const res = await fetch("https://vikram-portfolio-mgq7.onrender.com/contacts");
+    const data = await res.json();
+
+    const container = document.getElementById("messages");
+    container.innerHTML = "";
+
+    data.contacts.forEach(msg => {
+      container.innerHTML += `
+        <div class="card">
+          <b>${msg.name}</b>
+          <div class="email">${msg.email}</div>
+          <div class="msg">${msg.message}</div>
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    document.getElementById("messages").innerHTML = "❌ Failed to load messages";
+  }
+}
+
+loadMessages();
+</script>
+
+</body>
+</html>
